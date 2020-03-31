@@ -8,6 +8,12 @@ public class Main3 {
 
     public static <T> Set<T> symmetricDifference(Set<? extends T> set1, Set<? extends T> set2) {
 
+        /*
+        * реализовать метод, вовзращающий симметрическую разность множеств
+        * https://stepik.org/lesson/12776/step/14?unit=3124
+        *
+        * */
+
         Set<T> resultSet = new HashSet<>(set1);
         resultSet.addAll(set2);
         resultSet.removeIf((t) -> set1.contains(t) & set2.contains(t));
