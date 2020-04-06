@@ -23,18 +23,43 @@ class FunctionSet {
 
 public class Generator {
 
-    Function<Integer, Integer> function;
+    private Function<Integer, Integer> function;
+    private int initiatingValue;
 
-    public Generator(Function<Integer, Integer> function) {
+    public Generator(Function<Integer, Integer> function, int initiatingValue) {
         this.function = function;
+        this.initiatingValue = initiatingValue;
     }
+
+    public Integer nextValue(){
+        int tempValue = initiatingValue;
+        initiatingValue++;
+        return function.apply(tempValue);
+    }
+
+
 }
 
 class Main {
     public static void main(String[] args) {
-        Generator generator1 = new Generator(FunctionSet::getProgressionSum);
-        Generator generator2 = new Generator(FunctionSet::getFactorial);
-        System.out.println(generator1.function.apply(5));
-        System.out.println(generator2.function.apply(5));
+
+        Generator myGen = new Generator(FunctionSet::getProgressionSum, 2);
+        System.out.println(myGen.nextValue());
+        System.out.println(myGen.nextValue());
+        System.out.println(myGen.nextValue());
+
+        System.out.println();
+
+        Generator gen2 = new Generator(x -> x++, 5);
+        System.out.println(gen2.nextValue());
+        System.out.println(gen2.nextValue());
+        System.out.println(gen2.nextValue());
+        System.out.println(gen2.nextValue());
+        System.out.println(gen2.nextValue());
+
+//
+
+
+
     }
 }
