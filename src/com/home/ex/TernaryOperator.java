@@ -3,7 +3,7 @@ package com.home.ex;
 import java.util.function.Function;
 import java.util.function.Predicate;
 
-public class Main {
+public class TernaryOperator {
 
     public static <T, U> Function<T, U> ternaryOperator(
             Predicate<? super T> condition,
