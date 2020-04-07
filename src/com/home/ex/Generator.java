@@ -4,14 +4,14 @@ import java.util.function.Function;
 
 class FunctionSet {
 
-    public static int getProgressionSum(int n) {
+    public static Integer getProgressionSum(Integer n) {
         /* Вычисляет сумму от одного до n
          **/
         if (n == 1) return 1;
         else return n + getProgressionSum(n - 1);
     }
 
-    public static int getFactorial(int n) {
+    public static Integer getFactorial(Integer n) {
         /* Вычисляет факториал n
          **/
         if (n == 1)  return 1;
@@ -21,45 +21,44 @@ class FunctionSet {
 }
 
 
-public class Generator {
+public class Generator <T>{
 
-    private Function<Integer, Integer> function;
-    private int initiatingValue;
+    private Function<T, T> function;
+    private volatile T initValue;
 
-    public Generator(Function<Integer, Integer> function, int initiatingValue) {
+    public Generator(Function<T, T> function, T initValue) {
         this.function = function;
-        this.initiatingValue = initiatingValue;
+        this.initValue = initValue;
     }
 
-    public Integer nextValue(){
-        int tempValue = initiatingValue;
-        initiatingValue++;
-        return function.apply(tempValue);
+    public synchronized T nextValue(){
+        initValue = function.apply(initValue);
+        return initValue;
     }
-
-
 }
 
+
 class Main {
+
     public static void main(String[] args) {
 
-        Generator myGen = new Generator(FunctionSet::getProgressionSum, 2);
-        System.out.println(myGen.nextValue());
-        System.out.println(myGen.nextValue());
-        System.out.println(myGen.nextValue());
+        Generator gen2 = new Generator<Integer>(x -> ++x, 5);
 
-        System.out.println();
+        Runnable thread1 = () -> {
+            for (int i = 0; i < 120; i++) {
+                String el = "# " + (gen2.nextValue());
+                System.out.println(el);
+            }
+        };
 
-        Generator gen2 = new Generator(x -> x++, 5);
-        System.out.println(gen2.nextValue());
-        System.out.println(gen2.nextValue());
-        System.out.println(gen2.nextValue());
-        System.out.println(gen2.nextValue());
-        System.out.println(gen2.nextValue());
+        Runnable thread2 = () -> {
+            for (int i = 0; i < 120; i++) {
+                String el = "* " + gen2.nextValue();
+                System.out.println(el);
+            }
+        };
 
-//
-
-
-
+        new Thread(thread2).start();
+        new Thread(thread1).start();
     }
 }

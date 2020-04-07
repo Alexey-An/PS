@@ -2,7 +2,7 @@ package com.home.ex;
 
 import java.util.*;
 
-public class Main2 {
+public class RemoveEven {
 
     public static void main(String[] args) {
 

@@ -17,8 +17,8 @@ public class LoadBalancer {
         *
          */
 
-        private int id;
-        private int loadFactor;
+        private final int id;
+        private final int loadFactor;
 
         public Task(int id, int loadFactor) {
             this.id = id;
@@ -46,9 +46,11 @@ public class LoadBalancer {
         }
 
         public Task pickNextTaskFromQueue() {
-            Task task = taskQueue.pop();
-            totalLoad -= task.getLoadFactor();
-            return task;
+            if (!taskQueue.isEmpty()) {
+                Task task = taskQueue.pop();
+                totalLoad -= task.getLoadFactor();
+                return task;
+            } else return null;
         }
 
         public TaskQueue(int id) {
