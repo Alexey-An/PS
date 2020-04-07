@@ -44,24 +44,23 @@ public class StackMax {
         ArrayList<Integer> output = new ArrayList<>();
 
         StackWrapper myWrapper = new StackWrapper();
-        myWrapper.putOnStack(10);
-//        for (int j = 0; j <= numberOfUserCommands; j++) {
-//
-//            String[] command = myScanner.nextLine().split(" ");
-//            switch (command[0]) {
-//                case "max" : {
-//                    if (myWrapper.getMax() != null)
-//                        output.add(myWrapper.getMax());
-//                    break;
-//                } case "pop" : {
-//                    myWrapper.pop();
-//                    break;
-//                } case "push" : {
-//                    myWrapper.putOnStack(Integer.valueOf(command[1]));
-//                    break;
-//                }
-//            }
-//        }
-//        output.forEach(System.out::println);
+        for (int j = 0; j <= numberOfUserCommands; j++) {
+
+            String[] command = myScanner.nextLine().split(" ");
+            switch (command[0]) {
+                case "max" : {
+                    if (myWrapper.getMax() != null)
+                        output.add(myWrapper.getMax());
+                    break;
+                } case "pop" : {
+                    myWrapper.pop();
+                    break;
+                } case "push" : {
+                    myWrapper.putOnStack(Integer.valueOf(command[1]));
+                    break;
+                }
+            }
+        }
+        output.forEach(System.out::println);
     }
 }
